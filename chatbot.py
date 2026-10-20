@@ -11,6 +11,9 @@ headers = {
 while True:
     try:
         question = input("ask anything? \n")
+        if (question == ""):
+            continue
+
     except (EOFError, KeyboardInterrupt):
         print("Bye\n")
         break

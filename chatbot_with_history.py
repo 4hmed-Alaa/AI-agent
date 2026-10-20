@@ -18,6 +18,8 @@ def append_user_request(history, new_question):
 while True:
     try:
         question = input("ask anything? \n")
+        if (question == ""):
+            continue
     except (EOFError, KeyboardInterrupt):
         print("Bye\n")
         break
