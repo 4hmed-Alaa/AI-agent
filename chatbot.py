@@ -1,6 +1,6 @@
 import httpx, os
 
-url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent'
+url = 'https://generativelanguage.googleapis.com/v1beta/interactions'
 
 headers = {
         'Content-Type': 'application/json',
@@ -16,19 +16,12 @@ while True:
         break
 
     payload = {
-      "contents": [
-        {
-          "parts": [
-            {
-              "text": question
-            }
-          ]
-        }
-      ]
+        "store": False,
+        "model": "gemini-3.5-flash-lite",
+        "input": question
     }
-
     response = httpx.post(url, headers=headers, json=payload, timeout=30)
 
     response.raise_for_status()
-    print(response.json()["candidates"][0]["content"]["parts"][0]["text"] + "\n")
+    print(response.json()["steps"][1]["content"][0]["text"] + "\n")
 
