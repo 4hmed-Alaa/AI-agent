@@ -96,7 +96,7 @@ def start_sandbox():
         "--read-only", "--tmpfs", "/tmp",
         "--memory", "512m", "--cpus", "1", "--pids-limit", "100",
         "--cap-drop", "all", "--security-opt", "no-new-privileges",
-        "-v", "/home/ahmed/dev/AI-agent/sandbox:/work", "-w", "/work",
+        "-v", "./sandbox:/work", "-w", "/work",
         "docker.io/library/alpine:latest", "sleep", "infinity",
     ], check=True, capture_output=True)
     atexit.register(stop_sandbox)                   # clean up when the script exits
@@ -107,11 +107,11 @@ def run_in_sandbox(command):
             ["podman", "exec", "agent-box", "timeout", "30", "sh", "-c", command],
             capture_output=True, text=True, timeout=40)
     except subprocess.TimeoutExpired:
-        return format({"type": "response", "error": "timed out after 30s"})
+        return {"type": "response", "error": "timed out after 30s"}
     output = (r.stdout + r.stderr)[-2000:]
     if r.returncode != 0:
-        return format({"type": "response", "error": f"exit code {r.returncode}: {output}"})
-    return format({"type": "response", "command_output": output})
+        return {"type": "response", "error": f"exit code {r.returncode}: {output}"}
+    return {"type": "response", "command_output": output}
 
 
 print("sending tool defintion: " + "\n" + tool_definition_string)
@@ -132,11 +132,11 @@ while True:
 
     ### tool running loop
     while tool_call_string:
-        print("\n\n### Ai is running '" + tool_call_string + "'")
+        print("\n\n### Ai is running: \n```\n" + tool_call_string + "\n```\n")
         tool_call_result = run_in_sandbox(tool_call_string)
-        print("\n\n### tool result '" + tool_call_result + "'")
-        text_response = send_text_to_ai(tool_call_result)
+        print("\n\n### tool result:\n```\n" + tool_call_result["command_output"] + "\n```\n")
+        text_response = send_text_to_ai(format(tool_call_result))
         tool_call_string = check_for_tool_call(text_response)
 
-    print(text_response + "\n")
+    print("AI says:\n" + text_response + "\n")
 
