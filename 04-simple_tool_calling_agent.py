@@ -116,12 +116,12 @@ def run_in_sandbox(command):
 
 print("sending tool defintion: " + "\n" + tool_definition_string)
 response = send_text_to_ai(tool_definition_string)
-print(response)
+print(response + "\n")
 start_sandbox()
 
 while True:
     try:
-        question = input("ask anything? \n")
+        question = input("\nask anything? \n")
     except (EOFError, KeyboardInterrupt):
         print("Bye\n")
         break
@@ -132,9 +132,11 @@ while True:
 
     ### tool running loop
     while tool_call_string:
-        print("\n\n### Ai is running: \n```\n" + tool_call_string + "\n```\n")
+        print("\n### AI response: \n" + text_response + "\n")
+        print("\n### running command: \n```\n" + tool_call_string + "\n```\n")
         tool_call_result = run_in_sandbox(tool_call_string)
-        print("\n\n### tool result:\n```\n" + tool_call_result["command_output"] + "\n```\n")
+        print("\n### command result:\n```\n" + tool_call_result["command_output"] + "\n```")
+        print("sending result to AI\n")
         text_response = send_text_to_ai(format(tool_call_result))
         tool_call_string = check_for_tool_call(text_response)
 

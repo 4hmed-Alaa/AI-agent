@@ -1,13 +1,13 @@
 # AI Agent Learning
 
-I want to learn about how AI agents work, and what better way to do that that to build one myself.
+I want to learn about how AI agents work, and what better way to do that than to build them myself.
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 <!-- Add a brief summary of what you are building, your motivation, and your learning goals. -->
-This repository documents my journey learning how AI agents work under the hood. It progressively builds up concepts:
+This repository documents my journey learning how AI agents work under the hood:
 1. Sending basic prompt requests to an LLM API.
 2. Building a stateful conversational chatbot with message history.
 3. Teaching an LLM to invoke external tools (commands) using custom prompts.
@@ -15,7 +15,7 @@ This repository documents my journey learning how AI agents work under the hood.
 
 ---
 
-## ⚙️ Prerequisites
+##  Prerequisites
 
 Before running the scripts, ensure you have the following installed:
 
@@ -28,7 +28,7 @@ Before running the scripts, ensure you have the following installed:
 
 ---
 
-## 🔑 Getting and Setting Up the API Key
+##  Getting and Setting Up the API Key
 
 The scripts interact with Google's Gemini Interactions API (`gemini-3.5-flash-lite`).
 
@@ -52,7 +52,7 @@ export API_KEY=$(cat api.key)
 
 ---
 
-## 🛡️ Sandbox Isolation with Podman
+##  Sandbox Isolation with Podman
 
 When building agents capable of executing arbitrary bash commands, **sandboxing is critical** to prevent accidental damage or malicious actions on your host system.
 
@@ -73,7 +73,7 @@ podman pull docker.io/library/alpine:latest
 
 ---
 
-## 🚀 How to Run
+##  How to Run
 
 ### Hello World
 Hello World but from an AI:
@@ -99,11 +99,3 @@ How is a chatbox able to run commands, ask it to write a poem to a file:
 python 04-simple_tool_calling_agent.py
 ```
 
----
-
-## 📝 Notes & Future Learnings
-
-<!-- Space to write down takeaways, edge cases, and future iterations (e.g., native function calling, MCP, multi-agent collaboration) -->
-- [ ] Explore native Gemini function calling API.
-- [ ] Add more sandbox tools (file reading, writing, python execution).
-- [ ] Handle multi-step planning and reflection loops.
